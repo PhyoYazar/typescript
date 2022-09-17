@@ -8,23 +8,32 @@ const input = document.getElementById("todoinput")! as HTMLInputElement;
 const todolist = document.getElementById("todolists")!;
 const form = document.querySelector("form")!;
 
-const todos: Todo[] = readTodos();
-todos.forEach(createList);
+const todos: Todo[] = readTodosDataFromLS();
+todos.forEach(createTodoList);
 
-function readTodos(): Todo[] {
+function readTodosDataFromLS(): Todo[] {
   const readData = localStorage.getItem("todo");
   if (readData === null) return [];
   return JSON.parse(readData);
 }
 
-function createList(data: Todo): void {
+function saveTodosToLS(): void {
+  localStorage.setItem("todo", JSON.stringify(todos));
+}
+
+function createTodoList(data: Todo): void {
   const list = document.createElement("li");
   const checkbox = document.createElement("input");
+  checkbox.checked = data.checked;
   checkbox.type = "checkbox";
+  checkbox.addEventListener("change", () => {
+    data.checked = checkbox.checked;
+    saveTodosToLS();
+  });
+
   list.append(data.text);
   list.append(checkbox);
   todolist.append(list);
-  input.value = "";
 }
 
 const handleSubmit = (e: SubmitEvent) => {
@@ -35,9 +44,10 @@ const handleSubmit = (e: SubmitEvent) => {
     checked: false,
   };
 
-  createList(todoData);
+  createTodoList(todoData);
   todos.push(todoData);
   localStorage.setItem("todo", JSON.stringify(todos));
+  input.value = "";
 };
 
 form.addEventListener("submit", handleSubmit);
