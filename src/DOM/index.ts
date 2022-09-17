@@ -24,8 +24,9 @@ function saveTodosToLS(): void {
 function createTodoList(data: Todo): void {
   const list = document.createElement("li");
   const checkbox = document.createElement("input");
-  checkbox.checked = data.checked;
   checkbox.type = "checkbox";
+  checkbox.checked = data.checked;
+
   checkbox.addEventListener("change", () => {
     data.checked = checkbox.checked;
     saveTodosToLS();
@@ -46,7 +47,7 @@ const handleSubmit = (e: SubmitEvent) => {
 
   createTodoList(todoData);
   todos.push(todoData);
-  localStorage.setItem("todo", JSON.stringify(todos));
+  saveTodosToLS();
   input.value = "";
 };
 
