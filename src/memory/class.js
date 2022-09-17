@@ -68,6 +68,22 @@ class Person {
   }
 }
 
+class AdminPerson extends Person {
+  isAdmin = true;
+  constructor(first, last, powers) {
+    super(first, last);
+
+    this.powers = powers;
+  }
+}
+const admin = new AdminPerson("Tod", "Mody", [
+  "edit",
+  "delete",
+  "close",
+  "create",
+]);
+console.log(admin);
+
 const p1 = new Person("John", "Goo");
 
 const p2 = new Person("Yosha", "Mick");
