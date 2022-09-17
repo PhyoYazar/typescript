@@ -68,6 +68,7 @@ class Person {
   }
 }
 
+//////?   Extending (Inheritance)
 class AdminPerson extends Person {
   isAdmin = true;
   constructor(first, last, powers) {
