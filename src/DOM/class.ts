@@ -1,3 +1,5 @@
+//? one way writing class with typescript
+//////////////////////////////////////////////////////////?
 // class Player {
 //   public readonly first: string;
 //   public readonly last: string;
@@ -21,6 +23,7 @@
 //     console.log("SECRET...");
 //   }
 // }
+//////////////////////////////////////////////////////////?
 
 class Player {
   //   public readonly first: string;
@@ -31,11 +34,22 @@ class Player {
   constructor(
     public first: string,
     public last: string,
-    private scoreCard: number
+    // private _score: number     //only access in class itself
+
+    protected _score: number //protected can access in class ifself and child inheritance
   ) {
     // this.first = first;
     // this.last = last;
     this.secretMethod();
+  }
+
+  get score(): number {
+    return this._score;
+  }
+
+  set score(newScore: number) {
+    if (newScore < 0) throw new Error("Score cannot be negative");
+    this._score = newScore;
   }
 
   private secretMethod(): void {
@@ -43,5 +57,43 @@ class Player {
   }
 }
 
+class SuperPlayer extends Player {
+  public isAdmin: boolean = true;
+
+  maxScore() {
+    this._score = 99999;
+  }
+}
+
 const player1 = new Player("Hod", "Josh", 100);
 // player1.scoreCard
+console.log(player1.score);
+player1.score = 80;
+console.log(player1.score);
+
+//////////////////////////////////////////////////////////?
+
+interface Colorful {
+  color: string;
+}
+
+interface Printable {
+  print(): void;
+}
+
+class Bike implements Colorful {
+  constructor(public color: string) {}
+}
+
+class Jacket implements Colorful, Printable {
+  constructor(public color: string, public brand: string) {}
+
+  print() {
+    console.log(`${this.color} ${this.brand}`);
+  }
+}
+
+const bike1 = new Bike("red");
+
+const jacket1 = new Jacket("blue", "Prada");
+jacket1.print();
