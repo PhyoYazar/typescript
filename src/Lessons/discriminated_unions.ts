@@ -19,7 +19,14 @@ interface Pig {
   _type: "pig"; // discriminated Unions
 }
 
-type FarmAnimal = Rooster | Cow | Pig;
+interface Sheep {
+  name: string;
+  age: number;
+  weight: number;
+  _type: "sheep"; // discriminated Unions
+}
+
+type FarmAnimal = Rooster | Cow | Pig | Sheep;
 
 function getFarmAnimal(animal: FarmAnimal) {
   switch (animal._type) {
@@ -29,8 +36,16 @@ function getFarmAnimal(animal: FarmAnimal) {
       return "Cowwww";
     case "pig":
       return "Pig";
+    case "sheep":
+      return "Sheep";
+    //? if one of above theme is missing, typescript will yells errors because of ==> Exhaustiveness Check (Never)
+
     default:
-      return "HAHAHA";
+      //? We should never make it here, if we handle all cases correctly
+      //   const shouldNeverGetHere: never = animal;
+
+      const _exhaustiveCheck: never = animal;
+      return _exhaustiveCheck;
   }
 }
 
