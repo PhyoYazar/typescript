@@ -45,6 +45,9 @@ function getFarmAnimal(animal: FarmAnimal) {
       //   const shouldNeverGetHere: never = animal;
 
       const _exhaustiveCheck: never = animal;
+      // assigning never just like this may be just declaring variable,
+      // but the purpose is to check errors
+
       return _exhaustiveCheck;
   }
 }
